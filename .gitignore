@@ -1,0 +1,25 @@
+# Dependencies and package-manager caches
+node_modules/
+npm-cache/
+
+# Generated build output
+dist/
+*.tsbuildinfo
+deploy/*.tgz
+
+# Local environment and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Browser regression artifacts
+.edge-layout-check*/
+playground-layout-check.png
+preview*.png
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

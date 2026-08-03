@@ -1,0 +1,180 @@
+.elastic-slider {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: 24px;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+  clip-path: inset(0 round 8px);
+  contain: paint;
+  isolation: isolate;
+}
+
+.elastic-slider__wrapper {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  touch-action: none;
+  user-select: none;
+  overflow: hidden;
+  border-radius: inherit;
+  clip-path: inset(0 round 8px);
+}
+
+.elastic-slider__root {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  margin-right: 14px;
+  margin-left: 14px;
+  align-items: center;
+  padding: 10px 0;
+  outline: none;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 8px;
+  clip-path: inset(0 round 8px);
+  contain: paint;
+}
+
+.elastic-slider__root:active {
+  cursor: grabbing;
+}
+
+.elastic-slider__root:focus-visible {
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px rgba(143, 114, 211, 0.24);
+}
+
+.elastic-slider__track-wrapper {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+}
+
+.elastic-slider__track {
+  position: relative;
+  height: 100%;
+  flex: 1;
+  overflow: visible;
+  border-radius: 999px;
+  background: rgba(106, 116, 136, 0.24);
+  box-shadow:
+    inset 0 1px 2px rgba(67, 77, 98, 0.14),
+    0 0 0 1px rgba(84, 96, 119, 0.13);
+}
+
+.elastic-slider__range {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+  overflow: visible;
+  background: linear-gradient(
+    90deg,
+    rgba(137, 211, 235, 0.55),
+    rgba(151, 220, 192, 0.62) 22%,
+    rgba(238, 216, 138, 0.66) 43%,
+    rgba(232, 176, 151, 0.68) 64%,
+    rgba(224, 169, 201, 0.68) 82%,
+    rgba(169, 181, 225, 0.74)
+  );
+  background-size: 180% 100%;
+  filter: drop-shadow(0 0 2px rgba(92, 156, 185, 0.26));
+}
+
+.elastic-slider__range::before {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: min(46px, 42%);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.96));
+  content: "";
+  transform: translateY(-50%);
+}
+
+.elastic-slider__wrapper.is-dragging .elastic-slider__range {
+  background: linear-gradient(
+    90deg,
+    #b9eaff,
+    #c2f2df,
+    #fff0b8,
+    #ffd2bd,
+    #ffc6e4,
+    #cbd7ff,
+    #b9eaff
+  );
+  background-size: 260% 100%;
+  filter:
+    drop-shadow(0 0 2px rgba(116, 210, 244, 0.4))
+    drop-shadow(0 0 5px rgba(255, 151, 211, 0.16));
+  animation: elastic-rainbow-flow 1.8s linear infinite;
+}
+
+.elastic-slider__meteors {
+  position: absolute;
+  z-index: -1;
+  inset: 2px 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+}
+
+.elastic-slider__wrapper.is-dragging .elastic-slider__meteors {
+  opacity: 1;
+}
+
+.elastic-slider__meteors i {
+  --meteor-color: #62d7ff;
+  position: absolute;
+  top: 20%;
+  left: -28%;
+  width: 22px;
+  height: 1px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--meteor-color), white);
+  box-shadow: 0 0 4px var(--meteor-color);
+  opacity: 0;
+  transform: rotate(-7deg);
+  animation: elastic-meteor-swarm 0.9s linear infinite;
+}
+
+.elastic-slider__meteors i:nth-child(2n) { --meteor-color: #ff79c9; top: 67%; animation-duration: 0.72s; animation-delay: -0.31s; }
+.elastic-slider__meteors i:nth-child(3n) { --meteor-color: #58e7ac; top: 38%; width: 14px; animation-duration: 1.08s; animation-delay: -0.62s; }
+.elastic-slider__meteors i:nth-child(4n) { --meteor-color: #ffe36b; top: 82%; width: 10px; animation-duration: 0.64s; animation-delay: -0.18s; }
+.elastic-slider__meteors i:nth-child(5n) { --meteor-color: #839dff; top: 8%; width: 18px; animation-duration: 1.18s; animation-delay: -0.81s; }
+.elastic-slider__meteors i:nth-child(6n) { top: 52%; width: 8px; animation-duration: 0.58s; animation-delay: -0.44s; }
+.elastic-slider__meteors i:nth-child(7) { top: 28%; animation-delay: -0.72s; }
+.elastic-slider__meteors i:nth-child(8) { top: 74%; animation-delay: -0.5s; }
+.elastic-slider__meteors i:nth-child(9) { top: 14%; animation-delay: -0.24s; }
+.elastic-slider__meteors i:nth-child(10) { top: 58%; animation-delay: -0.93s; }
+.elastic-slider__meteors i:nth-child(11) { top: 88%; animation-delay: -0.39s; }
+.elastic-slider__meteors i:nth-child(12) { top: 43%; animation-delay: -0.67s; }
+
+@keyframes elastic-rainbow-flow {
+  to { background-position: -260% 0; }
+}
+
+@keyframes elastic-meteor-swarm {
+  0% { opacity: 0; transform: translateX(0) rotate(-7deg) scaleX(0.45); }
+  16% { opacity: 0.86; }
+  76% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateX(560%) rotate(-7deg) scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elastic-slider__range,
+  .elastic-slider__meteors i {
+    animation: none !important;
+  }
+}
