@@ -17,6 +17,11 @@ deploy/*.tgz
 .edge-layout-check*/
 playground-layout-check.png
 preview*.png
+mobile-layout-*.png
+mobile-slide-*.png
+.mobile-*.png
+.mobile-*.log
+.mobile-edge-profile*/
 
 # Editor and OS files
 .DS_Store

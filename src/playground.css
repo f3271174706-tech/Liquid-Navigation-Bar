@@ -1,5 +1,7 @@
 .playground-page {
+  width: 100%;
   min-height: 100vh;
+  overflow-x: clip;
   padding: 24px clamp(20px, 4vw, 64px) 64px;
   color: #20242c;
   background:
@@ -31,6 +33,7 @@
 }
 .lab-title {
   display: flex;
+  min-width: 0;
   align-items: center;
   color: #5d6370;
   font-family: inherit;
@@ -49,6 +52,12 @@
   background: #ffffffb8;
   box-shadow: 0 8px 24px #28344e14;
   font-size: 11px;
+}
+.lab-title span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .lab-actions,
 .lab-accent {
@@ -193,6 +202,9 @@
 .playground-page .lab-nav .nav-items--refracted {
   filter: url("#liquid-refract-rest") saturate(var(--lab-refraction));
 }
+.playground-page .lab-nav .nav-caption {
+  display: none;
+}
 .lab-code {
   padding: 70px clamp(28px, 7vw, 110px);
   background: linear-gradient(145deg, #fbfcff, #eff3f9);
@@ -332,34 +344,159 @@
     grid-template-columns: 1fr auto;
   }
   .lab-controls {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 620px) {
   .playground-page {
-    padding: 14px 12px 40px;
+    min-height: 100svh;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(24px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left));
   }
-  .lab-title span {
-    display: none;
+
+  .lab-header {
+    gap: 8px;
+    margin-bottom: 10px;
   }
+
+  .lab-title {
+    font-size: clamp(13px, 4vw, 17px);
+    letter-spacing: -0.045em;
+  }
+
+  .lab-actions {
+    gap: 4px;
+  }
+
+  .lab-actions .specular-button {
+    height: 34px;
+    padding-inline: 10px;
+    border-radius: 10px;
+    font-size: 11px;
+  }
+
+  .lab-actions svg {
+    width: 13px;
+  }
+
   .lab-preview {
-    border-radius: 20px;
+    border-radius: 18px;
+    box-shadow: 0 18px 48px #2b375214;
   }
+
   .lab-stage,
   .lab-code {
-    min-height: 520px;
+    min-height: 0;
   }
+
   .playground-page .lab-nav {
-    top: 50%;
+    top: 12px;
     bottom: auto;
-    width: calc(100% - 20px);
-    transform: translate(-50%, -50%);
+    width: calc(100% - 16px);
+    transform: translateX(-50%);
   }
+
+  .playground-page .lab-nav .liquid-nav {
+    height: clamp(54px, var(--lab-height), 64px);
+    padding: 4px;
+    border-radius: min(var(--lab-radius), 32px);
+  }
+
+  .playground-page .lab-nav .liquid-lens {
+    top: 4px;
+    bottom: 4px;
+  }
+
+  .playground-page .lab-nav .nav-item {
+    flex-direction: column;
+    gap: 1px;
+    padding: 2px 1px;
+  }
+
+  .playground-page .lab-nav .nav-item svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .playground-page .lab-nav .nav-item span {
+    max-width: 100%;
+    font-size: 9px;
+    line-height: 1.05;
+  }
+
+  .playground-page .lab-nav .nav-items--refracted {
+    padding: 0 4px;
+  }
+
   .lab-heading p {
     display: none;
   }
-  .lab-type strong {
-    font-size: 62px;
+
+  .lab-customize {
+    margin-top: 18px;
+  }
+
+  .lab-heading {
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .lab-heading__main {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .lab-heading h1 {
+    margin-top: 0;
+    font-size: clamp(20px, 6.2vw, 25px);
+    white-space: nowrap;
+  }
+
+  .lab-accent {
+    height: 32px;
+    flex: 0 0 auto;
+    padding-left: 8px;
+  }
+
+  .lab-accent > span,
+  .lab-accent code {
+    font-size: 9px;
+  }
+
+  .lab-accent input {
+    width: 25px;
+    height: 25px;
+  }
+
+  .lab-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 9px;
+    border-radius: 17px;
+  }
+
+  .lab-range {
+    grid-template-rows: auto 24px;
+    min-height: 64px;
+    gap: 4px 5px;
+    padding: 7px 7px 6px;
+    border-radius: 10px;
+  }
+
+  .lab-range > span {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 12.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lab-range output {
+    font-size: 9px;
   }
 }
 
@@ -648,18 +785,211 @@
 }
 
 @media (max-width: 620px) {
+  .playground-page .lab-stage {
+    height: clamp(430px, 61svh, 540px);
+    min-height: 0;
+  }
+
+  .playground-page .lab-scroll {
+    scrollbar-width: none;
+  }
+
+  .playground-page .lab-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
   .playground-page .lab-nav {
-    top: 18px;
+    top: 12px;
     bottom: auto;
-    width: calc(100% - 20px);
+    width: calc(100% - 16px);
     margin: 0;
     transform: translateX(-50%);
   }
 
-  .playground-page .lab-slide .lab-type strong {
-    font-size: 62px;
+  .playground-page .lab-slide .lab-type {
+    inset: 15% 7% 10%;
   }
 
+  .playground-page .lab-script-title strong {
+    font-size: clamp(64px, 23vw, 88px);
+  }
+
+  .playground-page .lab-script-title em {
+    font-size: clamp(38px, 12vw, 48px);
+  }
+
+  .playground-page .lab-type > span {
+    font-size: clamp(15px, 5vw, 20px);
+  }
+
+  .playground-page .lab-type > small {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+  }
+
+  .playground-page .tone-ice .lab-script-title strong {
+    top: 21%;
+    left: 2%;
+  }
+
+  .playground-page .tone-ice .lab-script-title em {
+    right: 0;
+    bottom: 22%;
+  }
+
+  .playground-page .tone-ice .lab-type > span {
+    right: 18%;
+    bottom: 1%;
+  }
+
+  .playground-page .tone-violet .lab-script-title strong {
+    top: 12%;
+    right: 0;
+  }
+
+  .playground-page .tone-violet .lab-script-title em {
+    bottom: 14%;
+    left: 0;
+    font-size: clamp(54px, 18vw, 72px);
+  }
+
+  .playground-page .tone-violet .lab-type > span {
+    top: 44%;
+    right: 0;
+    bottom: auto;
+  }
+
+  .playground-page .tone-coral .lab-script-title strong {
+    bottom: 8%;
+    left: 0;
+  }
+
+  .playground-page .tone-coral .lab-script-title em {
+    top: 11%;
+    right: 0;
+  }
+
+  .playground-page .tone-coral .lab-type > span {
+    right: 0;
+    bottom: 42%;
+  }
+
+  .playground-page .tone-mint .lab-script-title strong {
+    top: 35%;
+    font-size: clamp(66px, 22vw, 86px);
+  }
+
+  .playground-page .tone-mint .lab-script-title em {
+    top: 56%;
+  }
+
+  .playground-page .tone-amber .lab-script-title em {
+    right: 0;
+    bottom: 12%;
+    font-size: clamp(48px, 16vw, 64px);
+  }
+
+  .playground-page .tone-amber .lab-type > small {
+    top: 5%;
+    right: auto;
+    bottom: auto;
+    left: 0;
+  }
+
+  .playground-page .tone-amber .lab-script-title strong {
+    top: 22%;
+    left: 0;
+  }
+
+  .playground-page .tone-amber .lab-type > span {
+    top: 5%;
+    right: 0;
+    bottom: auto;
+  }
+
+  .playground-page .lab-slide-index {
+    right: 14px;
+    bottom: 12px;
+    font-size: 8px;
+  }
+
+  .playground-page .lab-stage > .motion-preset-nav {
+    bottom: 10px;
+    left: 10px;
+    max-width: calc(100% - 20px);
+  }
+
+  .playground-page .motion-preset-nav {
+    --mini-nav-height: 40px !important;
+    --mini-nav-width: min(158px, calc(100vw - 40px)) !important;
+    --mini-nav-radius: 20px !important;
+  }
+
+  .playground-page .motion-preset-nav button {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .lab-title span {
+    max-width: 82px;
+    font-size: 0;
+  }
+
+  .lab-title span::after {
+    content: "Liquid Bar";
+    font-size: 13px;
+  }
+
+  .lab-actions .specular-button {
+    padding-inline: 8px;
+    font-size: 10px;
+  }
+
+  .lab-heading h1 {
+    font-size: 19px;
+  }
+
+  .lab-accent code {
+    display: none;
+  }
+
+  .lab-controls {
+    gap: 6px;
+    padding: 7px;
+  }
+
+  .lab-range {
+    padding-inline: 5px;
+  }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .playground-page {
+    padding: 10px 16px 22px;
+  }
+
+  .lab-header {
+    margin-bottom: 8px;
+  }
+
+  .playground-page .lab-stage {
+    height: max(300px, calc(100svh - 70px));
+    min-height: 0;
+  }
+
+  .playground-page .lab-nav {
+    top: 12px;
+    width: min(var(--lab-width), calc(100% - 32px));
+  }
+
+  .playground-page .lab-nav .liquid-nav {
+    height: min(var(--lab-height), 60px);
+  }
+
+  .lab-controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 /* Desktop workstation: vertical layout, fully visible within one viewport. */
