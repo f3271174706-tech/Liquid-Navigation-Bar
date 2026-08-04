@@ -17,7 +17,11 @@ mv "${release_dir}/deploy/server.mjs" "${release_dir}/server.mjs"
 rmdir "${release_dir}/deploy"
 chmod -R a+rX "${release_dir}"
 
-install -o root -g root -m 0644 /tmp/bar-fzp.service /etc/systemd/system/bar-fzp.service
+if [ -f /tmp/bar-fzp.service ]; then
+  install -o root -g root -m 0644 /tmp/bar-fzp.service /etc/systemd/system/bar-fzp.service
+else
+  test -f /etc/systemd/system/bar-fzp.service
+fi
 systemd-analyze verify /etc/systemd/system/bar-fzp.service
 
 ln -s "${release_dir}" /opt/bar-fzp/current.next
