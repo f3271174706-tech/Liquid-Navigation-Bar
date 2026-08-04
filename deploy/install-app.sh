@@ -28,7 +28,8 @@ ln -s "${release_dir}" /opt/bar-fzp/current.next
 mv -Tf /opt/bar-fzp/current.next /opt/bar-fzp/current
 
 systemctl daemon-reload
-systemctl enable --now bar-fzp.service
+systemctl enable bar-fzp.service
+systemctl restart bar-fzp.service
 systemctl is-active --quiet bar-fzp.service
 for _ in {1..20}; do
   if curl -fsS http://127.0.0.1:18030/healthz; then
